@@ -1,2 +1,2 @@
-# domiticz-ihc-plugin
-Domiticz plugin for adding IHC via IHCServer as hardware.
+# domoticz-ihc-plugin
+Domoticz plugin for adding IHC via IHCServer as hardware.
