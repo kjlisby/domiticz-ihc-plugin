@@ -238,6 +238,14 @@ class BasePlugin:
                 "Failed to connect to IHCServer. Status: {0} Description: {1}".format(Status, Description))
         return True
 
+    def sendPong(self):
+        postData = "{\"type\":\"pong\"}"
+        sendMessage = { 'Verb' : 'POST',
+                        'URL'  : '/ihcevents-ws',
+                        'Data' : postData}
+        Domoticz.Debug("pong: "+str(sendMessage))
+        self.webSockConn.Send(sendMessage)
+
     def onMessage(self, Connection, Data):
         Domoticz.Debug("onMessage called "+Connection.Name)
         if Connection.Name == 'Main':
@@ -248,7 +256,6 @@ class BasePlugin:
                 return
             mType = Message['type']
             Domoticz.Debug("Message type = "+mType)
-# state': True, 'outputNumber': 3, 'moduleNumber': 5}
             if mType == "outputState":
                 Domoticz.Debug(str(Message))
                 module = Message['moduleNumber']
@@ -297,22 +304,15 @@ class BasePlugin:
                 else:
                     Domoticz.Error("Event: server returned a status: "+str(Data["Status"]))
                     this.webSockConn = None
-            elif "Operation" in Data:
-                if Data["Operation"] == "Ping":
-                    rand = randint(0,2)
-                    if (rand == 0):
-                        this.webSockConn.Send({'Operation':'Pong', 'Mask':939139389, 'Payload':'Hello'})
-                    elif (rand == 1):
-                        this.webSockConn.Send({'Operation':'Pong', 'Mask':939139389, 'Payload':b'Hello'})
-                    else:
-                        this.webSockConn.Send({'Operation':'Pong', 'Mask':939139389, 'Payload':bytearray([0x48, 0x65, 0x6c, 0x6c, 0x6f])})
             elif "Finish" in Data:
                 Message = Data['Payload']
                 Domoticz.Debug("Message = "+str(Message))
-#                Message = json.loads(Data['Payload'].decode("utf-8"))
                 Message = json.loads(Data['Payload'])
                 Domoticz.Debug("Message = "+str(Message))
                 ihcType   = Message['type']
+                if ihcType == 'ping':
+                    self.sendPong()
+                    return
                 ihcModule = Message['moduleNumber']
                 ihcPort   = Message['ioNumber']
                 ihcState  = Message['state']
