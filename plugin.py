@@ -92,10 +92,14 @@ class BasePlugin:
     def registerPort(self, moduleNo, port):
         devID = self.domoticzDeviceId(moduleNo, port)
         self.ihcIds.append(devID)
-        if devID in self.ports:
-            self.updatePortName(devID, port['description'])
+        if port['description'] == '':
+            name = devID
         else:
-            self.createPort(devID, port['description'])
+            name = port['description']
+        if devID in self.ports:
+            self.updatePortName(devID, name)
+        else:
+            self.createPort(devID, name)
         if 'outputState' in port:
             state = port['outputState']
         else:
