@@ -19,12 +19,6 @@
     <params>
        <param field="Address" label="IHCServer IP Address" width="200px" required="true" default="127.0.0.1"/>
         <param field="Port" label="IHCServer Port" width="200px" required="true" default="8081"/>
-        <param field="Mode2" label="Observe changes" width="75px">
-            <options>
-                <option label="Yes" value="True"/>
-                <option label="No" value="False"  default="true" />
-            </options>
-        </param>
         <param field="Mode6" label="Debug" width="150px">
             <options>
                 <option label="None" value="0"  default="true" />
