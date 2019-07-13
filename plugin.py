@@ -307,6 +307,9 @@ class BasePlugin:
             elif "Finish" in Data:
                 Message = Data['Payload']
                 Domoticz.Debug("Message = "+str(Message))
+                if "Switching Protocols" in str(Message):
+                    Domoticz.Debug("Switching Protocols")
+                    return
                 Message = json.loads(Data['Payload'])
                 Domoticz.Debug("Message = "+str(Message))
                 ihcType   = Message['type']
@@ -342,17 +345,20 @@ class BasePlugin:
         if Connection.Name == 'Main':
             self.sendNextCommand()
         elif Connection.Name == 'Events':
+            Domoticz.Status("Reconnecting to IHCServer")
+            self.webSockConn = Domoticz.Connection(Name="Events", Transport="TCP/IP", Protocol="WS", Address=Parameters["Address"], Port=Parameters["Port"])
             self.webSockConn.Connect()
 
     def onHeartbeat(self):
         Domoticz.Debug("onHeartbeat called "+str(self.heartbeatCnt))
         self.heartbeatCnt += 1
-        if (self.heartbeatCnt > 10):
+        if (self.heartbeatCnt > 180):
             self.getAllFromIHCServer()
             self.heartbeatCnt = 0
         self.sendNextCommand()
         if not self.webSockConn.Connected() and not self.webSockConn.Connecting():
             Domoticz.Status("Reconnecting to IHCServer")
+            self.webSockConn = Domoticz.Connection(Name="Events", Transport="TCP/IP", Protocol="WS", Address=Parameters["Address"], Port=Parameters["Port"])
             self.webSockConn.Connect()
 
 global _plugin
