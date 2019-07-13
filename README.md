@@ -37,3 +37,7 @@ Use the Domoticz WEB UI to do the following:
 - Write any name you want for your connection to IHCServer.
 - Write the IP address and port number of the HTTP server built into your IHCServer.
 - Push the "Add" button.
+
+# NOTE:
+
+This plugin builds upon the WEBSocket abilities in Domoticz, which are at present (JULY 2019) only available in the beta release of Domoticz. And further, issue #3398 need to be fixed before the plugin will work.
