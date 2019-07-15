@@ -44,6 +44,7 @@ class BasePlugin:
         self.heartbeatCnt = 0
         self.cmdQ = queue.Queue()
         self.ports = {}
+        self.ReconnectingWS = False
         return
 
     def initPorts(self):
@@ -338,26 +339,33 @@ class BasePlugin:
     def onNotification(self, Name, Subject, Text, Status, Priority, Sound, ImageFile):
         Domoticz.Debug("Notification: " + Name + "," + Subject + "," + Text + "," + Status + "," + str(Priority) + "," + Sound + "," + ImageFile)
 
+    def reconnectWS(self, reason):
+        Domoticz.Debug("reconnectWS "+reason)
+        if self.ReconnectingWS:
+            return
+        self.ReconnectingWS = True
+        self.webSockConn.Disconnect()
+        Domoticz.Status("Reconnecting to IHCServer "+reason)
+        self.webSockConn = Domoticz.Connection(Name="Events", Transport="TCP/IP", Protocol="WS", Address=Parameters["Address"], Port=Parameters["Port"])
+        self.webSockConn.Connect()
+
     def onDisconnect(self, Connection):
         Domoticz.Debug("onDisconnect called "+Connection.Name)
         if Connection.Name == 'Main':
             self.sendNextCommand()
         elif Connection.Name == 'Events':
-            Domoticz.Status("Reconnecting to IHCServer")
-            self.webSockConn = Domoticz.Connection(Name="Events", Transport="TCP/IP", Protocol="WS", Address=Parameters["Address"], Port=Parameters["Port"])
-            self.webSockConn.Connect()
+            self.reconnectWS("due to onDisconnect Events")
 
     def onHeartbeat(self):
         Domoticz.Debug("onHeartbeat called "+str(self.heartbeatCnt))
         self.heartbeatCnt += 1
+        self.ReconnectingWS = False
         if (self.heartbeatCnt > 180):
+            #Basically do a restart every half hour, since something somewhere seems a bit unstable
             self.getAllFromIHCServer()
+            self.reconnectWS("due to time lapse")
             self.heartbeatCnt = 0
         self.sendNextCommand()
-        if not self.webSockConn.Connected() and not self.webSockConn.Connecting():
-            Domoticz.Status("Reconnecting to IHCServer")
-            self.webSockConn = Domoticz.Connection(Name="Events", Transport="TCP/IP", Protocol="WS", Address=Parameters["Address"], Port=Parameters["Port"])
-            self.webSockConn.Connect()
 
 global _plugin
 _plugin = BasePlugin()

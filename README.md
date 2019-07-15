@@ -40,4 +40,4 @@ Use the Domoticz WEB UI to do the following:
 
 # NOTE:
 
-This plugin builds upon the WEBSocket abilities in Domoticz, which are at present (JULY 2019) only available in the beta release of Domoticz. And further, issue #3398 need to be fixed before the plugin will work.
+This plugin builds upon the WEBSocket abilities in Domoticz and especially a fix for issue #3398, which at present (JULY 2019) is only available in the beta release of Domoticz.
