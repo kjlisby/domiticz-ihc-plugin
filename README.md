@@ -19,7 +19,9 @@ The RS.485 interface can also be bought for very little money: https://www.reich
 
 The RS.485 interface must be connected to the RS.485 port (screw terminals) on the IHC controller via a twisted pair of wires.
 
-Note that there is an RS.485 port on all generations of IHC controllers. I have however only experience with the very first controller generation, where there is an RS.232 connector on the front. NOTE THAT RS.232 AND RS.485 ARE TWO VERY DIFFERENT THINGS. And in fact, the RS.232 connector on the IHC controller can only be used to program / set up the controller. I am in fact using another dongle on the same Raspberry Pi (an RS.232 USB) to make this kind of changes in the controller utilizing the picocom terminal emulator.
+Note that there is an RS.485 port on all generations of IHC controllers. I have however only experience with the very first controller generation, where there is an RS.232 connector on the front. 
+
+NOTE THAT RS.232 AND RS.485 ARE TWO VERY DIFFERENT THINGS. The RS.232 connector on the IHC controller can only be used to program / set up the controller. I am using another dongle on the same Raspberry Pi (an RS.232 USB) to make this kind of changes in the controller utilizing the picocom terminal emulator.
 
 # Installation of the plugin
 
