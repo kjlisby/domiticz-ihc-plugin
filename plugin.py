@@ -9,8 +9,8 @@
         IHC
         <h3>Features</h3>
         <ul style="list-style-type:square">
-            <li>Creates Domoticz switches for all IHC inputs and outputs and makes Domoticz devices correspondingly.</li>
-            <li>Listens to updates from IHC and updates Domoticz devices accordingly.</li>
+            <li>Creates Domoticz switches for all IHC inputs and outputs.</li>
+            <li>Listens to updates from IHC and updates Domoticz switches accordingly.</li>
             <li>Based on IHCServer, which must be installed, configured and running for this plugin to work.</li>
         </ul>
         <h3>Configuration</h3>
