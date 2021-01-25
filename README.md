@@ -2,7 +2,7 @@
 
 IHC is a system to control all electricity in a house. See the IHCServer project for more explanations.
 
-This plugin is glueing together the Domotics project (found here: https://github.com/domoticz/domoticz) and the IHCServer project (found here: https://github.com/skumlos/ihcserver).
+This plugin is glueing together the Domotics project (found here: https://github.com/domoticz/domoticz) and the IHCServer project (the original of which can be found here: https://github.com/skumlos/ihcserver, and including the glue to this plugin, it can be found here: https://github.com/kjlisby/ihcserver.git).
 
 Please see the two projects regarding preconditions and installation.
 
