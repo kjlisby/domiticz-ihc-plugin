@@ -73,15 +73,18 @@ class BasePlugin:
         self.nextDeviceId += 1
 
     def updatePortState(self, devID, state):
-        Domoticz.Debug("Updating device "+devID+" "+str(state))
         targetUnit = self.ports[devID]['Unit']
-        if state:
-            nVal = 1
-            sVal = "1"
+        if state != Devices[targetUnit].nValue:
+            Domoticz.Status("Updating device "+devID+" "+str(state))
+            if state:
+                nVal = 1
+                sVal = "1"
+            else:
+                nVal = 0
+                sVal = "0"
+            Devices[targetUnit].Update(nValue=nVal, sValue=sVal)
         else:
-            nVal = 0
-            sVal = "0"
-        Devices[targetUnit].Update(nValue=nVal, sValue=sVal)
+            Domoticz.Debug("Skipping update of device "+devID+" "+str(state))
 
     def updatePortName(self, devID, name):
         targetUnit = self.ports[devID]['Unit']
