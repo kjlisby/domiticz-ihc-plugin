@@ -30,7 +30,7 @@ The plugin can be installed basically any way you want. The important thing is t
 The easiest way is probably:
 ```shell
   $ cd domoticz/plugins
-  $ git clone https://github.com/domoticz/domoticz.git
+  $ git clone https://github.com/kjlisby/domoticz-ihc-plugin.git
   $ sudo systemctl restart domoticz
 ```
 
