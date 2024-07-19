@@ -6,6 +6,8 @@ This plugin is glueing together the Domotics project (found here: https://github
 
 Please see the two projects regarding preconditions and installation.
 
+I have been putting a few more words (in Danish) on my home automation projects and the IHC system in general here: https://lisby.dk/wordpress/?page_id=1061 and here: https://lisby.dk/wordpress/?p=3259
+
 # Hardware needs
 
 You will basically need:
